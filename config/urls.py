@@ -21,6 +21,12 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+from core.views import criar_admin_temporario
+
+urlpatterns += [
+    path("criar-admin/", criar_admin_temporario),
+]
+
 
 
 
