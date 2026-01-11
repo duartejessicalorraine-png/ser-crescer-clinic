@@ -1,0 +1,34 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Financeiro</h1>
+
+  <div class="grid" style="margin-top:14px;">
+    <div class="card">
+      <div class="small">Faturas abertas</div>
+      <div style="font-size:28px; font-weight:700;">{{ total_open }}</div>
+    </div>
+
+    <div class="card">
+      <div class="small">Faturas vencidas</div>
+      <div style="font-size:28px; font-weight:700;">{{ total_overdue }}</div>
+    </div>
+
+    <div class="card">
+      <div class="small">Faturas pagas</div>
+      <div style="font-size:28px; font-weight:700;">{{ total_paid }}</div>
+    </div>
+
+    <div class="card">
+      <div class="small">Recebido (total)</div>
+      <div style="font-size:28px; font-weight:700;">R$ {{ received }}</div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <a class="btn" href="{% url 'financeiro:invoice_list' %}">Ver faturas</a>
+    <a class="btn" href="/admin/financeiro/invoice/add/">Nova fatura (Admin)</a>
+  </div>
+</div>
+{% endblock %}
+

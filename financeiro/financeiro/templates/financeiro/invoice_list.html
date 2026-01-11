@@ -1,0 +1,49 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Faturas</h1>
+
+  <form method="get" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+    <input type="text" name="q" placeholder="Buscar por paciente..." value="{{ q }}" />
+    <select name="status">
+      <option value="">Todos os status</option>
+      <option value="open" {% if status == "open" %}selected{% endif %}>Aberta</option>
+      <option value="paid" {% if status == "paid" %}selected{% endif %}>Paga</option>
+      <option value="overdue" {% if status == "overdue" %}selected{% endif %}>Vencida</option>
+      <option value="canceled" {% if status == "canceled" %}selected{% endif %}>Cancelada</option>
+    </select>
+    <button class="btn" type="submit">Filtrar</button>
+    <a class="btn" href="{% url 'financeiro:invoice_list' %}">Limpar</a>
+  </form>
+
+  <div style="margin-top:14px; overflow:auto;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Paciente</th>
+          <th>Vencimento</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Abrir</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inv in invoices %}
+        <tr>
+          <td>#{{ inv.id }}</td>
+          <td>{{ inv.patient_name }}</td>
+          <td>{{ inv.due_date }}</td>
+          <td>R$ {{ inv.total_amount }}</td>
+          <td>{{ inv.get_status_display }}</td>
+          <td><a href="/admin/financeiro/invoice/{{ inv.id }}/change/">Editar</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">Nenhuma fatura encontrada.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
